@@ -3,19 +3,22 @@ if (isset($CONF_NO_FOOTER_PAGES) && in_array($page, $CONF_NO_FOOTER_PAGES)) {
     return;
 }
 ?>
-
-<footer class=" text-center py-4">
-    <!-- Copyright Section -->
-    <div class="container">
-        <p class="mb-0">
-            &copy; <?= date('Y') ?> A. Bartůňková | Všechna práva vyhrazena
-        </p>
-        <p class="text-muted">Created by <a href="https://www.instagram.com/whos.matous/">Matouš Drábek</a> | mathexyz@proton.me</p>
-        <div class="mt-3">
-            <a href="https://facebook.com" class="text-muted mx-2" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com" class="text-muted mx-2" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://instagram.com" class="text-muted mx-2" target="_blank"><i class="fab fa-instagram"></i></a>
+<footer class="site-footer">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div>
+            <span class="footer-brand"><?= htmlspecialchars($CONF_SHORT_NAME) ?></span>
+            <p class="footer-small mt-1">&copy; <?= date('Y') ?> &nbsp;·&nbsp; Made by <a href="<?= htmlspecialchars($CONF_CREATOR_INSTAGRAM) ?>" target="_blank"><?= htmlspecialchars($CONF_CREATOR_NAME) ?></a></p>
+        </div>
+        <div class="footer-socials">
+            <?php if (!empty($CONF_SOCIAL_INSTAGRAM)): ?>
+                <a href="<?= htmlspecialchars($CONF_SOCIAL_INSTAGRAM) ?>" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <?php endif; ?>
+            <?php if (!empty($CONF_SOCIAL_FACEBOOK)): ?>
+                <a href="<?= htmlspecialchars($CONF_SOCIAL_FACEBOOK) ?>" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <?php endif; ?>
+            <?php if (!empty($CONF_SOCIAL_TWITTER)): ?>
+                <a href="<?= htmlspecialchars($CONF_SOCIAL_TWITTER) ?>" target="_blank" title="Twitter / X"><i class="fab fa-twitter"></i></a>
+            <?php endif; ?>
         </div>
     </div>
 </footer>
-

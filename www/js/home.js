@@ -1,10 +1,13 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 3,
+document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('.swiper-home', {
+        slidesPerView: 'auto',
+        spaceBetween: 2,
+        loop: true,
+        speed: 4000,
         autoplay: {
-            delay: 1600, // Auto-swipe every 1 second
-            disableOnInteraction: false, // Keeps autoplay running even if user interacts
+            delay: 0,
+            disableOnInteraction: false,
         },
-        loop: true, // Ensures smooth infinite scrolling
+        freeMode: true,
     });
 });

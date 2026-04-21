@@ -1,63 +1,46 @@
-<div class="container my-5">
-    <?php
-    $categories = $db->query('SELECT id FROM album_types ORDER BY name DESC')->fetch_all(MYSQLI_ASSOC);
-    ?>
-    <h1 class="mb-3 ephesis">Alba</h1>
-    <div class="col-12 col-md-3">
-        <div class="input-group mb-3">
-            <span class="input-group-text"><i class="fa fa-filter"></i></span>
-            <select class="form-select filter-select" aria-label="Category select" id="type_id">
-                <option selected value="all">Vše</option>
-                <?php
-                $sql = "SELECT * FROM album_types";
-                foreach ($db->query($sql)->fetch_all(MYSQLI_ASSOC) as $row) {
-                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
-                }
-                ?>
-            </select>
+<section style="padding: 5rem 2rem;">
+    <div class="content-wrap">
+        <span class="section-label">Galerie</span>
+        <h1 class="hero-name mb-5" style="font-size: clamp(2.5rem, 6vw, 5rem);">Alba</h1>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs mb-0">
+            <button class="filter-btn active" data-type="all">Vše</button>
+            <?php
+            foreach ($db->query('SELECT * FROM album_types ORDER BY name')->fetch_all(MYSQLI_ASSOC) as $row) {
+                echo '<button class="filter-btn" data-type="' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</button>';
+            }
+            ?>
+        </div>
+
+        <div id="no-albums" class="alert alert-warning mt-4" role="alert" style="display:none;">
+            V této kategorii nejsou žádná alba.
+        </div>
+
+        <div class="portfolio-grid mt-0" style="margin-top: 0 !important;">
+            <?php
+            $albums = $db->query('SELECT id FROM albums ORDER BY id DESC')->fetch_all(MYSQLI_ASSOC);
+            foreach ($albums as $row):
+                $album = new Album($row['id'], $db);
+            ?>
+            <a class="portfolio-item album album-id-<?= $album->getAlbumTypeId() ?>"
+               href="/album?id=<?= $album->getId() ?>">
+                <img src="<?= htmlspecialchars($album->getAlbumPath() . $album->getCoverImage()) ?>"
+                     alt="<?= htmlspecialchars($album->getName()) ?>"
+                     loading="lazy">
+                <span class="item-count"><?= $album->getPhotoCount() ?> <i class="fas fa-images"></i></span>
+                <div class="item-info">
+                    <h5><?= htmlspecialchars($album->getName()) ?></h5>
+                    <span class="item-meta">
+                        <?php if ($album->getLocation()): ?><?= htmlspecialchars($album->getLocation()) ?><?php endif; ?>
+                        <?php if ($album->getAlbumTypeId()): ?>
+                            <?php if ($album->getLocation()): ?> &middot; <?php endif; ?>
+                            <?= htmlspecialchars($album->getAlbumTypeName()) ?>
+                        <?php endif; ?>
+                    </span>
+                </div>
+            </a>
+            <?php endforeach; ?>
         </div>
     </div>
-    <hr>
-    <div id="no-albums" class="alert alert-warning" role="alert">
-        V této kategorii nejsou žádná alba.
-    </div>
-    <div class="row g-4">
-        <?php
-        $albums = $db->query('SELECT id FROM albums ORDER BY albums.id DESC')->fetch_all(MYSQLI_ASSOC);
-        foreach ($albums as $id){
-            $album = new Album($id['id'], $db);
-            ?>
-            <div class="col-lg-4 col-md-6 col-12 fade-in-up album album-id-<?=$album->getAlbumTypeId()?>">
-                <div class="card card-hover position-relative h-100" onclick="window.location.href = '/album?id=<?=$album->getId()?>'">
-                    <img src="<?= $album->getAlbumPath() . $album->getCoverImage() ?>"
-                         class="card-img-top object-fit-cover rounded-top"
-                         style="height: 250px;"
-                         alt="<?= htmlspecialchars($album->getName()) ?>">
-
-                    <!-- Optional badge for photo count -->
-                    <span class="position-absolute top-0 end-0 m-2 badge bg-dark bg-opacity-50 text-white">
-                    <?= $album->getPhotoCount() ?> <i class="fas fa-images"></i>
-                </span>
-
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold"><?= htmlspecialchars($album->getName()) ?></h5>
-
-                        <?php if ($album->getLocation() != ''): ?>
-                            <h6 class="card-subtitle text-muted mb-2"><?= htmlspecialchars($album->getLocation()) ?></h6>
-                        <?php endif; ?>
-
-                        <!-- Author and date -->
-                        <div class="d-flex align-items-center text-muted small mb-2 gap-3">
-                            <span><i class="fas fa-user me-1"></i><?= ucfirst($album->getCreatedByName()) ?></span>
-                            <span><i class="fas fa-calendar-alt me-1"></i><?= $album->getCreatedHumanReadable() ?></span>
-                            <?php if ($album->getAlbumTypeId() != 0): ?>
-                                <span class="badge text-bg-secondary"><i class="fas fa-filter me-1"></i><?= $album->getAlbumTypeName() ?></span>
-                            <?php endif; ?>
-                        </div>
-                        <p class="card-text mt-auto"><?= $album->getDescription() ?></p>
-                    </div>
-                </div>
-            </div>
-        <?php } ?>
-    </div>
-</div>
+</section>

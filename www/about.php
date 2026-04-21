@@ -1,36 +1,42 @@
-<div class="container animate__animated animate__backInRight py-5 mb-5">
-    <div class="row align-items-center">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-            <h1 class="dancing-script" style="font-size: 4rem">
-                Adéla Bartůňková
-            </h1>
-            <ul class="list-unstyled mt-5">
-                <li class="mb-3">
-                    <strong>Zaměření</strong>
-                    <ul>
-                        <li>Grafický design, Fotografická tvorba, 3D Grafika, Film a video, Kresba, Malba</li>
-                    </ul>
-                </li>
-                <li class="mb-3">
-                    <strong>Práce v programech</strong>
-                    <ul>
-                        <li>Adobe Illustrátor, Adobe InDesign, Adobe Photoshop, Adobe Premiere Pro, Adobe Lightroom, Blender, Procreate</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>Vzdělání</strong>
-                    <ul>
-                        <li>Odborná střední škola podnikání a mediální tvorby Kolín s.r.o.</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-4 text-center">
-            <div class="oval-wrapper mx-auto shadow" style="width: 300px; height: 400px; overflow: hidden; border-radius: 50% / 40%; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
-                <img src="/img/home/sili.jpg" class="img-fluid shadow" alt="Adéla Bartůňková" style="width: 100%; height: 100%; object-fit: cover;">
+<section style="padding: 5rem 2rem;">
+    <div class="content-wrap">
+        <div class="row g-5 align-items-start">
+            <!-- Text column -->
+            <div class="col-md-7 order-md-1 order-2">
+                <span class="section-label">Kdo jsem</span>
+                <h1 class="about-name mb-5"><?= htmlspecialchars($CONF_TITLE) ?></h1>
+
+                <div class="mb-5">
+                    <p style="font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:0.75rem;">Zaměření</p>
+                    <div>
+                        <?php foreach ($CONF_SKILLS as $skill): ?>
+                            <span class="skill-tag"><?= htmlspecialchars($skill) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <p style="font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:0.75rem;">Programy</p>
+                    <div>
+                        <?php foreach ($CONF_TOOLS as $tool): ?>
+                            <span class="skill-tag"><?= htmlspecialchars($tool) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:0.75rem;">Vzdělání</p>
+                    <p><?= htmlspecialchars($CONF_EDUCATION) ?></p>
+                </div>
+            </div>
+
+            <!-- Portrait column -->
+            <div class="col-md-5 order-md-2 order-1">
+                <div class="about-portrait">
+                    <img src="<?= htmlspecialchars($CONF_PORTRAIT) ?>"
+                         alt="<?= htmlspecialchars($CONF_TITLE) ?>">
+                </div>
             </div>
         </div>
-        <div class="col-md-2"></div>
     </div>
-</div>
+</section>

@@ -13,76 +13,72 @@ if ($album->isDeleted()) {
 }
 ?>
 
-<div class="position-relative overflow-hidden" style="height: 70vh;">
-    <img src="<?= $album->getAlbumPath() . $album->getCoverImage() ?>"
-         alt="<?= htmlspecialchars($album->getName()) ?>"
-         class="w-100 h-100 object-fit-cover">
-
-    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-end p-5 text-white">
-        <h1 class="text-white display-4"><?= htmlspecialchars($album->getName()) ?></h1>
-        <p class="lead"><?= htmlspecialchars($album->getLocation()) ?> · <?= $album->getCreatedHumanReadable() ?></p>
+<!-- Hero -->
+<div class="album-hero">
+    <img src="<?= htmlspecialchars($album->getAlbumPath() . $album->getCoverImage()) ?>"
+         alt="<?= htmlspecialchars($album->getName()) ?>">
+    <div class="album-hero-overlay">
+        <div>
+            <h1><?= htmlspecialchars($album->getName()) ?></h1>
+            <p><?= htmlspecialchars($album->getLocation()) ?><?= $album->getLocation() ? ' &nbsp;·&nbsp; ' : '' ?><?= $album->getCreatedHumanReadable() ?></p>
+        </div>
     </div>
 </div>
 
-<!--<div class="container container-fade my-4">-->
-<!--    <a href="/albums" class="btn btn-outline-secondary">-->
-<!--        <i class="fas fa-arrow-left me-2"></i> Zpět na seznam alb-->
-<!--    </a>-->
-<!--</div>-->
-
-<!-- Content Section -->
-<div class="container container-fade my-5">
-    <div class="row">
-        <!-- Description -->
-        <div class="col-md-7 mb-5">
-            <h2 class="mb-3">Popis</h2>
-            <p class="fs-5 lh-lg"><?= nl2br($album->getDescriptionFull()) ?></p>
-
-            <div class="text-muted mt-4">
-                <i class="fas fa-user me-1"></i> <?= ucfirst($album->getCreatedByName()) ?>
+<!-- Content -->
+<section style="padding: 4rem 2rem;">
+    <div class="content-wrap">
+        <div class="row g-5">
+            <!-- Description -->
+            <div class="col-md-5">
+                <span class="section-label">Popis</span>
+                <p class="fs-5 lh-lg"><?= nl2br(htmlspecialchars($album->getDescriptionFull())) ?></p>
+                <p class="mt-4" style="font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">
+                    <i class="fas fa-user me-2"></i><?= ucfirst(htmlspecialchars($album->getCreatedByName())) ?>
+                </p>
+                <a href="/albums" style="font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);">
+                    <i class="fas fa-arrow-left me-1"></i> Zpět
+                </a>
             </div>
-        </div>
 
-        <!-- Gallery Swiper -->
-        <div class="col-md-5">
-            <h2 class="mb-3">Galerie (<?= $album->getPhotoCount() ?>)</h2>
-
-            <?php
-            $photos = $album->getPhotos();
-            if (count($photos) > 0):
-                ?>
-                <div class="row g-4">
+            <!-- Photo grid -->
+            <div class="col-md-7">
+                <span class="section-label">Fotografie &nbsp;(<?= $album->getPhotoCount() ?>)</span>
+                <?php $photos = $album->getPhotos(); ?>
+                <?php if (count($photos) > 0): ?>
+                <div class="photo-grid">
                     <?php foreach ($photos as $index => $photo): ?>
-                        <div class="col-12 col-md-4">
-                            <div class="ratio ratio-1x1">
-                                <img src="<?= $album->getAlbumPath() . $photo ?>"
-                                     class="img-fluid rounded object-fit-cover w-100 h-100"
-                                     alt="Photo <?= $index + 1 ?>"
-                                     data-bs-toggle="modal" data-bs-target="#photoModal"
-                                     data-index="<?= $index ?>">
-                            </div>
-                        </div>
+                    <div class="photo-grid-item">
+                        <img src="<?= htmlspecialchars($album->getAlbumPath() . $photo) ?>"
+                             alt="Foto <?= $index + 1 ?>"
+                             loading="lazy"
+                             data-bs-toggle="modal"
+                             data-bs-target="#photoModal"
+                             data-index="<?= $index ?>">
+                    </div>
                     <?php endforeach; ?>
                 </div>
-            <?php else: ?>
-                <p class="text-muted">Album je prázdné.</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <p style="color:var(--muted)">Album je prázdné.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- Photo Modal -->
 <div class="modal fade overflow-hidden" id="photoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content bg-black ">
-        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 5 !important;"></button>
+        <div class="modal-content bg-black">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="modal" aria-label="Close" style="z-index:5;"></button>
             <div class="modal-body mySwiper overflow-hidden p-0">
                 <div class="swiper-wrapper">
                     <?php foreach ($photos as $photo): ?>
-                        <div class="swiper-slide">
-                            <img src="<?= $album->getAlbumPath() . $photo ?>" class="w-100 h-100 object-fit-contain "
-                                 alt="Photo">
-                        </div>
+                    <div class="swiper-slide">
+                        <img src="<?= htmlspecialchars($album->getAlbumPath() . $photo) ?>"
+                             class="w-100 h-100 object-fit-contain" alt="">
+                    </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="swiper-button-next text-white"></div>
@@ -90,3 +86,4 @@ if ($album->isDeleted()) {
             </div>
         </div>
     </div>
+</div>

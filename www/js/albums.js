@@ -1,21 +1,18 @@
-$('.filter-select').on('change', function () {
-    var selectedValue = $(this).val();
-    if (selectedValue === 'all') {
-        $('.album').show();
-        $('#no-albums').hide();
-    } else {
-        $('.album').hide();
-        var visibleAlbums = $('.album-id-' + selectedValue).show();
-
-        // If no albums are visible after the filter
-        if (visibleAlbums.length === 0) {
-            $('#no-albums').show();
-        } else {
-            $('#no-albums').hide();
-        }
-    }
-});
-
-$(function() {
+$(function () {
     $('#no-albums').hide();
+
+    $('.filter-btn').on('click', function () {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        var type = $(this).data('type');
+        if (type === 'all') {
+            $('.album').show();
+            $('#no-albums').hide();
+        } else {
+            $('.album').hide();
+            var visible = $('.album-id-' + type).show();
+            $('#no-albums').toggle(visible.length === 0);
+        }
+    });
 });
