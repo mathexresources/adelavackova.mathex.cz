@@ -1,0 +1,72 @@
+#dropArea {
+    transition: border-color 0.3s ease-in-out;
+}
+
+#dropArea.border-primary {
+    border-color: #007bff !important;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+
+.uploaded-photo {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.uploaded-photo.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Photo action bar (star + trash) */
+.photo-actions {
+    /* Override Bootstrap .ratio > * which forces position/size on all direct children */
+    width: auto !important;
+    height: auto !important;
+    left: auto !important;
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 20px;
+    padding: 4px 8px;
+    z-index: 10;
+}
+
+.photo-actions span {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.photo-actions i {
+    color: #fff;
+    font-size: 0.8rem;
+    transition: transform 0.15s;
+    pointer-events: none;
+}
+
+.photo-actions span:hover i {
+    transform: scale(1.25);
+}
+
+.photo-actions span[data-action="delete"]:hover i {
+    color: #ff6b6b;
+}
+
+.photo-actions .thumbnail-icon.fas {
+    color: #ffd700;
+}
+
+.trumbowyg-editor-box {
+    background: #fff !important;
+}

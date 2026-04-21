@@ -1,0 +1,11 @@
+{
+  "platform": {
+    "php": "8.4.0"
+  },
+  "autoload": {
+    "classmap": [
+      "classes/"
+    ]
+  }
+}
+
